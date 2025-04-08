@@ -63,6 +63,7 @@ export default function Home() {
   } catch (error) {
     console.error("Error initializing Firebase Messaging:", error);
   }
+  console.log("first", messaging);
   // Function to get FCM Token
   const getFcmToken = async () => {
     const vapidKey =

@@ -1,13 +1,15 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { Todo } from '@/lib/types';
+import { useState, useEffect } from "react";
+import { Todo } from "@/lib/types";
 
 export function useTodos() {
   const [todos, setTodos] = useState<Todo[]>([]);
 
+  const [newTodo, setNewTodo] = useState("");
+
   useEffect(() => {
-    const storedTodos = localStorage.getItem('todos');
+    const storedTodos = localStorage.getItem("todos");
     if (storedTodos) {
       setTodos(JSON.parse(storedTodos));
     }
@@ -22,7 +24,7 @@ export function useTodos() {
     };
     const updatedTodos = [...todos, newTodo];
     setTodos(updatedTodos);
-    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
   };
 
   const toggleTodo = (id: string) => {
@@ -30,14 +32,14 @@ export function useTodos() {
       todo.id === id ? { ...todo, completed: !todo.completed } : todo
     );
     setTodos(updatedTodos);
-    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
   };
 
   const deleteTodo = (id: string) => {
     const updatedTodos = todos.filter((todo) => todo.id !== id);
     setTodos(updatedTodos);
-    localStorage.setItem('todos', JSON.stringify(updatedTodos));
+    localStorage.setItem("todos", JSON.stringify(updatedTodos));
   };
 
-  return { todos, addTodo, toggleTodo, deleteTodo };
+  return { todos, newTodo, setNewTodo, addTodo, toggleTodo, deleteTodo };
 }

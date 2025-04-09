@@ -8,6 +8,9 @@ const withPWA = require("next-pwa")({
 });
 const nextConfig = withPWA({
   output: "export",
+  experimental: {
+    serverActions: true, // Enable Server Actions
+  },
   eslint: {
     ignoreDuringBuilds: true,
   },

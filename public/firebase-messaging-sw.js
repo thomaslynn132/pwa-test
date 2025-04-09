@@ -13,15 +13,14 @@ importScripts(
 // your app's Firebase config object.
 // https://firebase.google.com/docs/web/setup#config-object
 firebase.initializeApp({
-  apiKey: "AIzaSyAECbu1tA8yRBG3gdGm-GLJBq4s0XVJHig",
-  authDomain: "learn-english-with-thomas132.firebaseapp.com",
-  databaseURL:
-    "https://learn-english-with-thomas132-default-rtdb.firebaseio.com",
-  projectId: "learn-english-with-thomas132",
-  storageBucket: "learn-english-with-thomas132.firebasestorage.app",
-  messagingSenderId: "1005202250499",
-  appId: "1:1005202250499:web:de891f909006c2115c2736",
-  measurementId: "G-XL40N1GVDE",
+  apiKey: process.env.FIREBASE_API_KEY,
+  authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.FIREBASE_PROJECT_ID,
+  storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.FIREBASE_APP_ID,
+  measurementId: process.env.FIREBASE_MEASUREMENT_ID,
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
 });
 
 // Retrieve an instance of Firebase Messaging so that it can handle background

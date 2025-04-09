@@ -9,15 +9,13 @@ import { useTodos } from "@/hooks/useTodos";
 import InstallPWA from "@/components/InstallPWA";
 import ShareApp from "@/components/ShareApp";
 import { useEffect, useState } from "react";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
 import { app } from "@/lib/firebaseConfig";
 
 const Home = () => {
   const { todos, addTodo, toggleTodo, deleteTodo, newTodo, setNewTodo } =
     useTodos();
   const [fcmToken, setFcmToken] = useState<string | null>(null);
-  const [notification, setNotification] = useState<any>(null);
-
   // Initialize Firebase Messaging
   let messaging: any;
   if (typeof window !== "undefined") {
@@ -27,8 +25,7 @@ const Home = () => {
   // Function to get FCM Token
   const getFcmToken = async () => {
     try {
-      const vapidKey =
-        "BJ4HLzjXVEZHQu5EVnokmN2EgQUnNQ5ey-JgHzSaqz3WeAEKjmceAd-0w_8S6IAq-DVzOMQ7It2IZD28VGkBezs";
+      const vapidKey = process.env.FIREBASE_VAPID_KEY;
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
         const token = await getToken(messaging, { vapidKey });
@@ -46,15 +43,6 @@ const Home = () => {
     }
   };
 
-  // Function to handle foreground notifications
-  const onNotificationReceived = (callback: (payload: any) => void) => {
-    onMessage(messaging, (payload: any) => {
-      console.log("Notification received:", payload);
-      setNotification(payload); // Save the notification in state
-      callback(payload);
-    });
-  };
-
   // Check for fullscreen permission or restrictions
   const checkForFullscreenPermission = () => {
     if (!document.documentElement.requestFullscreen) {
@@ -63,26 +51,13 @@ const Home = () => {
     }
 
     if (window.innerWidth <= 768) {
-      alert(
-        "On mobile devices, fullscreen may not work automatically. Please click 'Go Fullscreen' to trigger."
-      );
+      alert("On mobile devices, fullscreen may not work automatically.");
     }
   };
 
   // Effects
   useEffect(() => {
     getFcmToken(); // Get the FCM token on mount
-  }, []);
-
-  useEffect(() => {
-    const handleNotification = (payload: any) => {
-      console.log("Foreground notification received:", payload);
-      alert(
-        `Notification: ${payload.notification.title} - ${payload.notification.body}`
-      );
-    };
-
-    onNotificationReceived(handleNotification);
   }, []);
 
   useEffect(() => {

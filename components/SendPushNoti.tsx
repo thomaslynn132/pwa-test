@@ -1,34 +1,41 @@
 // import React, { useState } from "react";
 // import axios from "axios";
-// import { getAccessToken } from "@/lib/getAccessToken";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import { Button } from "@/components/ui/button";
+// import { Card } from "@/components/ui/card";
 
 // const SendPushNoti: React.FC = () => {
 //   const [title, setTitle] = useState("");
 //   const [body, setBody] = useState("");
 //   const [token, setToken] = useState("");
-// const accessToken= getAccessToken(); // Get the access token from your function
+
 //   const sendNotification = async () => {
 //     if (!token || !title || !body) {
 //       alert("Please fill in all fields.");
 //       return;
 //     }
 
-//     const payload = {
-//       notification: {
-//         title,
-//         body,
-//       },
-//       to: token, // FCM token of the recipient
-//     };
-
 //     try {
+//       // Fetch the access token from the API route
+//       const { data } = await axios.get("/api/getAccessToken");
+//       const accessToken = data.accessToken;
+
+//       const payload = {
+//         notification: {
+//           title,
+//           body,
+//         },
+//         to: token, // FCM token of the recipient
+//       };
+
 //       const response = await axios.post(
 //         "https://fcm.googleapis.com/fcm/send",
 //         payload,
 //         {
 //           headers: {
 //             "Content-Type": "application/json",
-//             Authorization: `Bearer ${accessToken}`, // Replace with your Firebase server key
+//             Authorization: `Bearer ${accessToken}`,
 //           },
 //         }
 //       );
@@ -41,43 +48,44 @@
 //   };
 
 //   return (
-//     <div>
-//       <h1>Send Push Notification</h1>
-//       <div>
-//         <label>
-//           FCM Token:
-//           <input
+//     <Card className="p-6 max-w-md mx-auto space-y-4">
+//       <h1 className="text-xl font-bold text-center">Send Push Notification</h1>
+//       <div className="space-y-3">
+//         <div>
+//           <Label htmlFor="token">FCM Token</Label>
+//           <Input
+//             id="token"
 //             type="text"
 //             value={token}
 //             onChange={(e) => setToken(e.target.value)}
 //             placeholder="Enter recipient's FCM token"
 //           />
-//         </label>
-//       </div>
-//       <div>
-//         <label>
-//           Title:
-//           <input
+//         </div>
+//         <div>
+//           <Label htmlFor="title">Title</Label>
+//           <Input
+//             id="title"
 //             type="text"
 //             value={title}
 //             onChange={(e) => setTitle(e.target.value)}
 //             placeholder="Enter notification title"
 //           />
-//         </label>
-//       </div>
-//       <div>
-//         <label>
-//           Body:
-//           <input
+//         </div>
+//         <div>
+//           <Label htmlFor="body">Body</Label>
+//           <Input
+//             id="body"
 //             type="text"
 //             value={body}
 //             onChange={(e) => setBody(e.target.value)}
 //             placeholder="Enter notification body"
 //           />
-//         </label>
+//         </div>
+//         <Button onClick={sendNotification} className="w-full">
+//           Send Notification
+//         </Button>
 //       </div>
-//       <button onClick={sendNotification}>Send Notification</button>
-//     </div>
+//     </Card>
 //   );
 // };
 

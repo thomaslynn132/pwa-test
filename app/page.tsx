@@ -21,14 +21,14 @@ const Home = () => {
   // Initialize Firebase Messaging
   let messaging: any;
   if (typeof window !== "undefined") {
-    const messaging = getMessaging(app);
+    messaging = getMessaging(app); // Remove the `const` keyword here
   }
 
   // Function to get FCM Token
   const getFcmToken = async () => {
-    const vapidKey =
-      "BJ4HLzjXVEZHQu5EVnokmN2EgQUnNQ5ey-JgHzSaqz3WeAEKjmceAd-0w_8S6IAq-DVzOMQ7It2IZD28VGkBezs";
     try {
+      const vapidKey =
+        "BJ4HLzjXVEZHQu5EVnokmN2EgQUnNQ5ey-JgHzSaqz3WeAEKjmceAd-0w_8S6IAq-DVzOMQ7It2IZD28VGkBezs";
       const permission = await Notification.requestPermission();
       if (permission === "granted") {
         const token = await getToken(messaging, { vapidKey });

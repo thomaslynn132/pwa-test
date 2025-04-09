@@ -1,4 +1,5 @@
-"use server";
+"use client";
+
 import { JWT } from "google-auth-library";
 import admin from "firebase-admin";
 
